@@ -2,15 +2,16 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useMemo, useState } from "react";
 
+import { Header } from "@/components/Header/Header";
 import { TypesLayout } from "@/components/Home/styles";
 import { TypeMatchup } from "@/components/TypeMatchup/TypeMatchup";
 import { TypeSelect } from "@/components/TypeSelect/TypeSelect";
 import { TypeRepository, TypeWithDamages } from "@/repository/TypeRepository";
-import { PageLayout } from "@/ui/Page/PageLayout";
+import { FluidButton } from "@/ui/FluidButton";
 import { PageContent } from "@/ui/Page/PageContent";
+import { PageLayout } from "@/ui/Page/PageLayout";
 import { PageTitle } from "@/ui/Page/PageTitle";
 import { VStack } from "@/ui/VStack";
-import { Header } from "@/components/Header/Header";
 
 interface HomeProps {
   types: TypeWithDamages[];
@@ -44,12 +45,15 @@ const useTypeSelection = (types: TypeWithDamages[]) => {
   const removeSelectedType = (typeId: number) =>
     setSelectedTypeIds(selectedTypeIds.filter((x) => x !== typeId));
 
+  const resetSelectedTypes = () => setSelectedTypeIds([]);
+
   return {
     selectedTypeIds,
     primaryType,
     secondaryType,
     addSelectedType,
     removeSelectedType,
+    resetSelectedTypes,
   };
 };
 
@@ -60,6 +64,7 @@ const Home: React.FC<HomeProps> = ({ types }) => {
     secondaryType,
     addSelectedType,
     removeSelectedType,
+    resetSelectedTypes,
   } = useTypeSelection(types);
 
   return (
@@ -90,11 +95,17 @@ const Home: React.FC<HomeProps> = ({ types }) => {
             </TypesLayout>
 
             {selectedTypeIds.length > 0 && (
-              <TypeMatchup
-                allTypes={types}
-                primaryType={primaryType!}
-                secondaryType={secondaryType}
-              />
+              <>
+                <TypeMatchup
+                  allTypes={types}
+                  primaryType={primaryType!}
+                  secondaryType={secondaryType}
+                />
+
+                <FluidButton onClick={resetSelectedTypes}>
+                  Clear selection
+                </FluidButton>
+              </>
             )}
           </VStack>
         </PageContent>
