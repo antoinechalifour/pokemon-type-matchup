@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useMemo, useState } from "react";
-import styled from "styled-components";
 
 import { TypesLayout } from "@/components/Home/styles";
 import { TypeMatchup } from "@/components/TypeMatchup/TypeMatchup";
@@ -11,6 +10,7 @@ import { PageLayout } from "@/ui/Page/PageLayout";
 import { PageContent } from "@/ui/Page/PageContent";
 import { PageTitle } from "@/ui/Page/PageTitle";
 import { VStack } from "@/ui/VStack";
+import { Header } from "@/components/Header/Header";
 
 interface HomeProps {
   types: TypeWithDamages[];
@@ -53,21 +53,6 @@ const useTypeSelection = (types: TypeWithDamages[]) => {
   };
 };
 
-const HeaderLayout = styled.header`
-  padding: 2rem;
-  text-align: center;
-
-  img {
-    max-width: 60px;
-  }
-`;
-
-const Header: React.FC = () => (
-  <HeaderLayout>
-    <img src="/pokeball.png" alt="Pokeball" />
-  </HeaderLayout>
-);
-
 const Home: React.FC<HomeProps> = ({ types }) => {
   const {
     selectedTypeIds,
@@ -81,7 +66,7 @@ const Home: React.FC<HomeProps> = ({ types }) => {
     <>
       <PageLayout>
         <Head>
-          <title>Create Next App</title>
+          <title>Pokemon Type Matchup</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
