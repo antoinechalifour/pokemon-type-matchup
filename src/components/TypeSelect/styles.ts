@@ -23,4 +23,9 @@ export const TypeSelectLabel = styled.label`
     border-color: #373737 !important;
     opacity: 1;
   }
+
+  input:focus + * {
+    outline: 1px dotted #212121;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
 `;
